@@ -28,7 +28,7 @@ pipeline{
         }
         stage('Checkout from Git'){
             steps{
-                git branch: 'main', url: 'https://github.com/Aj7Ay/Tetris-V2.git'
+                git branch: 'main', url: 'https://github.com/naveenrenati/Tetris-project.git'
             }
         }
         stage("Sonarqube Analysis "){
@@ -86,17 +86,23 @@ pipeline{
     }
 }
 
+If you get docker login failed errorr
+
+sudo su
+sudo usermod -aG docker jenkins
+sudo systemctl restart jenkins
+
 ```        
 
 # Image updater stage
 ```
  environment {
-    GIT_REPO_NAME = "Tetris-manifest"
-    GIT_USER_NAME = "Aj7Ay"
+    GIT_REPO_NAME = "Tetris-project"
+    GIT_USER_NAME = "naveenrenati"
   }
     stage('Checkout Code') {
       steps {
-        git branch: 'main', url: 'https://github.com/Aj7Ay/Tetris-manifest.git'
+        git branch: 'main', url: 'https://github.com/naveenrenati/Tetris-project.git'
       }
     }
 
@@ -111,6 +117,7 @@ pipeline{
             sh "sed -i 's|image: .*|image: $NEW_IMAGE_NAME|' deployment.yml"
 
             // Git commands to stage, commit, and push the changes
+            cd Argo-CD Manifest
             sh 'git add deployment.yml'
             sh "git commit -m 'Update deployment image to $NEW_IMAGE_NAME'"
             sh "git push https://${GITHUB_TOKEN}@github.com/${GIT_USER_NAME}/${GIT_REPO_NAME} HEAD:main"
